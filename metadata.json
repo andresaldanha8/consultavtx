@@ -1,0 +1,6 @@
+{
+  "name": "100 Vozes da Cidade — Vitória do Xingu",
+  "description": "Consulta comunitária digital para moradores de Vitória do Xingu/PA sobre prioridades de investimentos e oportunidades futuras.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

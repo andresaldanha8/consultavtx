@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/* Intelligent vertical scaling for compact mobile screens (zero scroll guarantee) */
+@media (max-height: 720px) {
+  .hero-banner-adaptive {
+    height: 7.75rem !important;
+  }
+  .skyline-adaptive {
+    max-width: 200px !important;
+  }
+}
+
+@media (max-height: 660px) {
+  .hero-banner-adaptive {
+    height: 6.5rem !important;
+  }
+  .skyline-adaptive {
+    max-width: 175px !important;
+  }
+}
