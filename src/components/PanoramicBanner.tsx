@@ -15,7 +15,7 @@ export const PanoramicBanner: React.FC<Props> = ({ className }) => {
     >
       {/* Main photographic banner image (user-provided) or fallback SVG */}
       <div className="relative w-full h-full">
-        <img src="/fundo.png" alt="Vitória do Xingu" className="absolute inset-0 w-full h-full object-cover object-[center_58%]" draggable={false} />
+        <img src="/fundo.png?v=2" alt="Vitória do Xingu" className="absolute inset-0 w-full h-full object-cover object-[center_58%]" draggable={false} />
 
         {/* If image not available, fallback decorative svg (kept for compatibility) */}
         <svg
