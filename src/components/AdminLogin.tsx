@@ -9,8 +9,8 @@ interface Props {
 }
 
 export const AdminLogin: React.FC<Props> = ({ onLoginSuccess, onCancel }) => {
-  const [username, setUsername] = useState<string>('admin');
-  const [password, setPassword] = useState<string>('admin123');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -58,7 +58,7 @@ export const AdminLogin: React.FC<Props> = ({ onLoginSuccess, onCancel }) => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
           <div className="space-y-1.5">
             <label
               htmlFor="admin-username"
@@ -73,7 +73,7 @@ export const AdminLogin: React.FC<Props> = ({ onLoginSuccess, onCancel }) => {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                autoComplete="username"
+                autoComplete="off"
                 placeholder="Nome de usuário"
                 className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:ring-2 focus:ring-[#00a86b] focus:border-[#00a86b]"
                 required
@@ -95,7 +95,7 @@ export const AdminLogin: React.FC<Props> = ({ onLoginSuccess, onCancel }) => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password"
+                autoComplete="new-password"
                 placeholder="••••••••"
                 className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm focus:outline-hidden focus:ring-2 focus:ring-[#00a86b] focus:border-[#00a86b]"
                 required
@@ -123,16 +123,7 @@ export const AdminLogin: React.FC<Props> = ({ onLoginSuccess, onCancel }) => {
           </button>
         </form>
 
-        {responsesService.isDemoMode() && (
-          <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-center space-y-1">
-            <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-              Acesso Modo Demonstração
-            </span>
-            <p className="text-xs text-slate-600">
-              Usuário: <code className="font-mono text-slate-800 bg-white px-1.5 py-0.5 rounded border border-slate-200">admin</code> &bull; Senha: <code className="font-mono text-slate-800 bg-white px-1.5 py-0.5 rounded border border-slate-200">admin123</code>
-            </p>
-          </div>
-        )}
+        {/* Credenciais de demonstração removidas da interface para não expor usuário/senha */}
 
         <div className="pt-2 text-center">
           <button

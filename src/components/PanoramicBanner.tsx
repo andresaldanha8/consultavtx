@@ -1,4 +1,5 @@
 import React from 'react';
+import { Logo } from './Logo';
 
 interface Props {
   className?: string;
@@ -12,13 +13,17 @@ export const PanoramicBanner: React.FC<Props> = ({ className }) => {
         "relative w-full aspect-[16/9] max-h-52 sm:max-h-56 rounded-2xl overflow-hidden shadow-sm border border-slate-200/80 group"
       }
     >
-      {/* High definition photographic-quality scenic Amazon river & town representation */}
-      <svg
-        className="w-full h-full object-cover"
-        viewBox="0 0 640 360"
-        preserveAspectRatio="xMidYMid slice"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      {/* Main photographic banner image (user-provided) or fallback SVG */}
+      <div className="relative w-full h-full">
+        <img src="/fundo.png" alt="Vitória do Xingu" className="absolute inset-0 w-full h-full object-cover object-[center_58%]" draggable={false} />
+
+        {/* If image not available, fallback decorative svg (kept for compatibility) */}
+        <svg
+          className="hidden w-full h-full object-cover"
+          viewBox="0 0 640 360"
+          preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg"
+        >
         <defs>
           <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#38bdf8" />
@@ -146,13 +151,23 @@ export const PanoramicBanner: React.FC<Props> = ({ className }) => {
         <rect x="250" y="258" width="6" height="16" fill="#78350f" />
         <rect x="246" y="252" width="14" height="6" fill="#b45309" />
         <circle cx="249" cy="250" r="2" fill="#ffffff" />
-      </svg>
-
-      {/* Subtle overlay pill badge indicating the location */}
-      <div className="absolute bottom-2.5 right-3 bg-black/45 backdrop-blur-xs text-white text-[10px] font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        <span>Vitória do Xingu — Pará</span>
+        </svg>
       </div>
+
+      {/* Logo sobreposto ao hero (mantém o componente Logo) */}
+      <div className="absolute top-5 left-0 right-0 z-20 flex justify-center">
+        <Logo size="hero" showSubtitle={true} />
+      </div>
+
+      {/* Green wave separating hero e conteúdo branco (z-10 behind logo) */}
+      <svg
+        className="absolute bottom-0 left-0 z-10 w-full h-[16%] pointer-events-none"
+        viewBox="0 0 1200 140"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M0,122 C250,125 470,118 690,105 C900,92 1070,62 1200,25 L1200,140 L0,140 Z" fill="#00A86B" />
+      </svg>
     </div>
   );
 };

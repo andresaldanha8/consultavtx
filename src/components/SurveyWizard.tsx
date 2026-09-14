@@ -276,9 +276,8 @@ export const SurveyWizard: React.FC<SurveyWizardProps> = ({ onStepChange, onNavi
         ========================================================= */}
         {step === 0 && (
           <div className="flex-1 h-full max-h-[100dvh] flex flex-col justify-between items-center text-center py-0.5 animate-in fade-in duration-300">
-            {/* Cabeçalho Compacto com Logo */}
+            {/* Cabeçalho compacto (somente botão administrativo; logo será sobreposto no hero) */}
             <div className="w-full relative flex items-center justify-center pt-0.5 pb-0.5 shrink-0">
-              <Logo size="sm" showSubtitle={true} />
               {onNavigateAdmin && (
                 <button
                   type="button"
@@ -293,13 +292,13 @@ export const SurveyWizard: React.FC<SurveyWizardProps> = ({ onStepChange, onNavi
 
             {/* Imagem Principal de Vitória do Xingu */}
             <div className="w-full px-0.5 my-1 sm:my-1.5 shrink-0">
-              <PanoramicBanner className="relative w-full h-28 xs:h-32 sm:h-40 md:h-44 hero-banner-adaptive rounded-2xl overflow-hidden shadow-xs border border-slate-200/80 group" />
+              <PanoramicBanner className="relative left-1/2 w-screen -translate-x-1/2 sm:left-auto sm:w-full sm:translate-x-0 h-[360px] sm:h-[380px] rounded-none sm:rounded-2xl overflow-hidden" />
             </div>
 
             {/* Headline e Texto */}
             <div className="space-y-1 sm:space-y-1.5 px-1 shrink-0">
               <h1 className="text-[16px] xs:text-[17px] sm:text-xl font-black text-[#111e32] tracking-tight leading-snug">
-                O futuro da nossa cidade também passa pela sua voz.
+                O futuro da nossa cidade também <br/>passa pela sua voz.
               </h1>
               <p className="text-[11px] xs:text-[11.5px] sm:text-xs text-slate-600 leading-snug max-w-[340px] mx-auto">
                 Queremos ouvir moradores de Vitória do Xingu sobre quais áreas devem receber novos investimentos, oportunidades e atenção nos próximos anos.
@@ -812,16 +811,16 @@ export const SurveyWizard: React.FC<SurveyWizardProps> = ({ onStepChange, onNavi
             TELA 7: TELA DE SUCESSO (EXATAMENTE CONFORME REFERÊNCIA)
         ========================================================= */}
         {step === 7 && (
-          <div className="flex-1 h-full max-h-[100dvh] flex flex-col justify-between items-center text-center py-1 sm:py-2 animate-in fade-in duration-300">
+          <div className="flex-1 h-full max-h-[100dvh] flex flex-col justify-start items-center text-center py-1 sm:py-2 gap-2 animate-in fade-in duration-300">
             {/* Ícone: Grande Círculo Verde com Check no Topo */}
-            <div className="pt-2 sm:pt-4 shrink-0">
+            <div className="pt-1 sm:pt-2 shrink-0">
               <div className="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 rounded-full bg-[#00a86b] text-white flex items-center justify-center shadow-md mx-auto">
                 <Check className="w-8 h-8 xs:w-10 xs:h-10 sm:w-12 sm:h-12 stroke-[3]" />
               </div>
             </div>
 
-            {/* Título e Mensagens de Agradecimento */}
-            <div className="space-y-1.5 px-2 shrink-0">
+            {/* Título e Mensagens de Agradecimento (compactado) */}
+            <div className="space-y-1 px-2 shrink-0">
               <h1 className="text-xl sm:text-2xl font-black text-[#111e32] tracking-tight">
                 Sua voz foi registrada!
               </h1>
@@ -833,31 +832,34 @@ export const SurveyWizard: React.FC<SurveyWizardProps> = ({ onStepChange, onNavi
               </p>
             </div>
 
-            {/* Bloco de Compartilhamento WhatsApp */}
-            <div className="w-full px-2 space-y-2 shrink-0 my-1">
+            {/* Bloco de Compartilhamento WhatsApp (mais próximo do texto) */}
+            <div className="w-full px-2 space-y-1 shrink-0 my-0.5 max-w-[420px]">
               <button
                 type="button"
                 onClick={handleShareWhatsApp}
-                className="w-full bg-[#00a86b] hover:bg-[#00925d] active:scale-[0.99] text-white font-bold py-3 xs:py-3.5 px-5 rounded-xl shadow-xs transition-all flex items-center justify-center gap-2.5 text-xs xs:text-sm min-h-[44px]"
+                className="w-full bg-[#00a86b] hover:bg-[#00925d] active:scale-[0.99] text-white font-bold py-3 xs:py-3.5 px-5 rounded-xl shadow-xs transition-all flex items-center justify-center gap-2 text-xs xs:text-sm min-h-[44px]"
               >
                 <MessageCircle className="w-4 h-4 xs:w-5 xs:h-5 fill-current" />
                 <span>Compartilhar no WhatsApp</span>
               </button>
 
-              <p className="text-[11px] xs:text-xs font-semibold text-slate-700">
+              <p className="text-[11px] xs:text-xs font-semibold text-slate-700 mt-1">
                 Vamos juntos construir novas oportunidades para a nossa cidade!
               </p>
             </div>
 
-            {/* Rodapé Visual: Skyline + Logo 100 Vozes da Cidade + Voltar ao início */}
-            <div className="w-full flex flex-col items-center space-y-1.5 pt-1 pb-1 shrink-0">
+            {/* Rodapé Visual: Skyline + Logo 100 Vozes da Cidade + Voltar ao início (compactado e próximo ao botão) */}
+            <div className="w-full flex flex-col items-center space-y-0 pt-0.5 pb-2 shrink-0 max-w-[420px]">
               <CitySkyline className="w-full max-w-[200px] xs:max-w-[220px] sm:max-w-[250px] skyline-adaptive h-auto" />
-              <Logo size="sm" showSubtitle={true} />
+
+              <div className="mt-4">
+                <Logo size="lg" showSubtitle={true} />
+              </div>
 
               <button
                 type="button"
                 onClick={handleResetSurvey}
-                className="text-[11px] text-slate-400 hover:text-slate-600 underline transition-colors pt-0.5"
+                className="text-[11px] text-slate-400 hover:text-slate-600 underline transition-colors mt-2"
               >
                 Voltar ao início
               </button>

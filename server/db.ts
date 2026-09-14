@@ -45,11 +45,20 @@ function writeLocalSubmissions(data: Submission[]) {
 }
 
 export async function initDb(): Promise<void> {
+  const isProduction = process.env.NODE_ENV === 'production';
   const host = process.env.MYSQL_HOST;
   const dbUrl = process.env.DATABASE_URL;
+  const hasMysqlConfig = Boolean(host || dbUrl);
+
+  // In production MySQL configuration is mandatory
+  if (isProduction && !hasMysqlConfig) {
+    throw new Error(
+      '[DB] Production requires MySQL configuration. MYSQL_HOST or DATABASE_URL is missing.'
+    );
+  }
 
   // Check if MySQL is configured
-  if (host || dbUrl) {
+  if (hasMysqlConfig) {
     try {
       console.log('[DB] Connecting to MySQL database...');
       if (dbUrl) {
@@ -100,8 +109,14 @@ export async function initDb(): Promise<void> {
       storageMode = 'mysql';
       return;
     } catch (err: any) {
-      console.warn('[DB] Could not connect to MySQL (' + err.message + '). Falling back to secure local file storage.');
+      console.error('[DB] Could not connect to MySQL (' + err.message + ').');
       pool = null;
+      if (isProduction) {
+        // In production we must fail fast to avoid silent local persistence
+        console.error('[DB] Production environment — aborting startup due to MySQL connection failure.');
+        throw err;
+      }
+      console.warn('[DB] Falling back to secure local file storage.');
       storageMode = 'local_fallback';
     }
   } else {
@@ -144,7 +159,12 @@ export async function saveSubmission(sub: Submission & { ipHash?: string }): Pro
       );
       return;
     } catch (err) {
-      console.error('[DB] MySQL insert failed, fallback to local store:', err);
+      console.error('[DB] MySQL insert failed:', err);
+      if (process.env.NODE_ENV === 'production') {
+        // In production do not silently write to local storage — propagate error
+        throw err;
+      }
+      console.warn('[DB] Falling back to local store.');
     }
   }
 
@@ -212,7 +232,12 @@ export async function getAllSubmissions(filter?: { status?: string; search?: str
       }));
       return list;
     } catch (err) {
-      console.error('[DB] MySQL query failed, falling back to local file:', err);
+      console.error('[DB] MySQL query failed:', err);
+      if (process.env.NODE_ENV === 'production') {
+        // In production, surface the error instead of silently returning local data
+        throw err;
+      }
+      console.warn('[DB] Falling back to local file.');
     }
   }
 
@@ -266,6 +291,11 @@ export async function updateSubmissionStatus(id: string, newStatus: SubmissionSt
       };
     } catch (err) {
       console.error('[DB] MySQL update status failed:', err);
+      if (process.env.NODE_ENV === 'production') {
+        // In production do not fall back to file updates silently
+        throw err;
+      }
+      console.warn('[DB] Falling back to local file update.');
     }
   }
 
